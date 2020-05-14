@@ -24,7 +24,11 @@ exports.main = async (event, context) => {
         }
       })
       .then(res => {
-        return {msg: 'ok'}
+        return {msg: 'ok', userInfo: {
+          openid: wxContext.OPENID,
+          name: event.name,
+          id: event.id
+        }}
       })
     }
   })

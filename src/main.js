@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import App from './App'
-import WXRequest from './utils/wx-request'
-Vue.prototype.$wxhttp = WXRequest
+import store from './store/main'
+
+Vue.prototype.$store = store
 Vue.config.productionTip = false
 App.mpType = 'app'
 Vue.mixin({
@@ -18,9 +19,10 @@ Vue.mixin({
 })
 
 wx.cloud.init({
+  env: 'class-eight-01fjv',
   traceUser: true
 })
 Vue.prototype.$db = wx.cloud.database()
-
+store.commit('loadUserInfo')
 const app = new Vue(App)
 app.$mount()

@@ -11,9 +11,9 @@
         <p class="text-desc">{{ startTimeText }}</p>
       </div>
       <div class="block">
-        <p class="text-title">截至时间</p>
+        <p class="text-title">截止时间</p>
         <p class="text-desc">{{ endTimeText }}</p>
-        <p class="text-desc" v-show="endCountdown != ''">还有 {{ endCountdown }}</p>
+        <p class="text-desc bold" v-show="endCountdown != ''">还有 {{ endCountdown }}</p>
       </div>
       <div class="block">
         <p class="text-title">作业内容</p>
@@ -75,5 +75,8 @@ export default {
 }
 .detail {
   margin-top: 40px;
+}
+.bold {
+  font-weight: 600;
 }
 </style>

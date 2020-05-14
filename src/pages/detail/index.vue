@@ -2,7 +2,9 @@
   <div class="page-detail">
     <swiper class="swiper" indicator-dots="true">
       <swiper-item v-for="(homework, index) in homeworkArray" :key="index">
-        <HomeworkDetail :homework="homework"/>
+        <scroll-view scroll-y="true">
+          <HomeworkDetail :homework="homework"/>
+        </scroll-view>
       </swiper-item>
     </swiper>
   </div>
@@ -29,6 +31,9 @@ export default {
       .get().then(res => {
         wx.hideLoading()
         this.homeworkArray = res.data.homework
+        wx.setNavigationBarTitle({
+          title: res.data.name
+        })
       })
     /*
     this.$wxhttp
@@ -55,5 +60,9 @@ page, .page-detail {
 }
 .swiper {
   min-height: 100%;
+}
+scroll-view {
+  height: 100%;
+  overflow-y: scroll;
 }
 </style>

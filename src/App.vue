@@ -19,9 +19,10 @@ export default {
 .text-title {
   font-size: 20px;
   font-weight: 400;
+  letter-spacing: 1px;
 }
 .text-desc {
-  margin-top: 5px;;
+  margin-top: 8px;
   color: #888888;
   font-size: 14px;
 }
@@ -32,9 +33,21 @@ export default {
 }
 
 .button-item {
-  box-shadow: 0 3px 8px 0 rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.08);
-  margin: 20px 0;
-  padding: 20px;
+  border-radius: 3px;
+  color: #212529;
+  font-size: 20px;
+  background-color: #FFD161;
+  box-shadow: 0 3px 8px 0 rgba(0,0,0,0.2);
+  padding: 16px;
   text-align: center;
+  &.transition {
+    transition: 0.2s;
+  }
+  &.disabled {
+    background-color: #f3f3f3;
+    border: 1px solid #eeeeee;
+    color: #cccccc;
+    box-shadow: none;
+  }
 }
 </style>
