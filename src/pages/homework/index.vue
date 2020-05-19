@@ -13,12 +13,12 @@
         <div class="course-item" v-for="(course, i1) in courseList" :key="course.name">
           <div class="course-item-title" @click="navigateToDetail(course._id)">
             <span>{{ course.name }}</span>
-            <span class="right">{{ course.homework.length }} 项</span>
+            <Count :homework-list="course.homework" />
           </div>
           <div class="course-item-body">
             <div class="homework-item" hover-class="hover" v-for="(homework, i2) in course.homework" :key="homework.name" @click="navigateToDetail(course._id, homework.id)">
               <span>{{ homework.name }}</span>
-              <span class="right">{{ homework.eta }}</span>
+              <ETA :homework="homework"/>
             </div>
           </div>
         </div>
@@ -28,8 +28,13 @@
 </template>
 
 <script>
-import TimeUtil from '@/utils/time'
+import ETA from './ETA.vue'
+import Count from './Count.vue'
 export default {
+  components: {
+    ETA,
+    Count
+  },
   data () {
     return {
       courseList: []
@@ -50,7 +55,6 @@ export default {
         .get().then(res => {
           wx.hideLoading()
           wx.stopPullDownRefresh()
-          this.processCourseList(res.data)
           this.courseList = res.data
         })
     },
@@ -58,30 +62,6 @@ export default {
       wx.navigateTo({
         url: `/pages/detail/main?courseId=${courseId}&homeworkId=${homeworkId}`
       })
-    },
-    processCourseList (courseList) {
-      for (let courseIndex = 0; courseIndex < courseList.length; courseIndex++) {
-        const homeworks = courseList[courseIndex].homework
-        for (let homeworkIndex = 0; homeworkIndex < homeworks.length; homeworkIndex++) {
-          const homework = homeworks[homeworkIndex]
-          homework.eta = this.getLargestTime(homework.endTime)
-        }
-      }
-    },
-    getLargestTime (endTime) {
-      if (endTime.timestamp) {
-        const temp = TimeUtil.getCountdownString(endTime.timestamp).split(' ')
-        for (let index = 0; index < temp.length; index += 2) {
-          const element = temp[index]
-          if (+element === 0) {
-            continue
-          } else {
-            return `${+temp[index]} ${temp[index + 1]}`
-          }
-        }
-      } else {
-        return ''
-      }
     }
   }
 }
@@ -115,9 +95,5 @@ export default {
       }
     }
   }
-}
-
-.right {
-  float: right;
 }
 </style>

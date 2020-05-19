@@ -49,5 +49,14 @@ export default {
     color: #cccccc;
     box-shadow: none;
   }
+  &.hover {
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.08);
+  }
+}
+.bold {
+  font-weight: 600;
+}
+.right {
+  float: right;
 }
 </style>

@@ -7,11 +7,13 @@
       <p class="text-desc">{{ isLogged ? '不知道说什么...' : '您尚未登记信息，请点击右下角「我」进行登记。'}}</p>
     </div>
     <div class="page-body">
-      <div class="list">
-        <div class="button-item" :class="{ 'disabled': !isLogged}" @click="goToPage('homework', true)">
-          <span>作业查询</span>
-        </div>
-      </div>
+      <ul class="button-list">
+        <li>
+          <div class="button-item transition" hover-class="hover" :class="{ 'disabled': !isLogged}" @click="goToPage('homework', true)">
+            <span>作业查询</span>
+          </div>
+        </li>
+      </ul>
     </div>
     <div class="footer">
       <p class="text-desc">暂时只有看作业这个功能，等后续开发...</p>
@@ -44,5 +46,13 @@ export default {
   position: fixed;
   bottom: 24px;
   width: 100%;
+}
+.button-list {
+  li {
+    margin: 12px 0;
+    &:first-child {
+      margin-top: 0;
+    }
+  }
 }
 </style>

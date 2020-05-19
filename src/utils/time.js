@@ -1,7 +1,5 @@
-function getCountdownString (timestamp) {
-  const now = new Date()
-  const timeEnd = new Date(timestamp)
-  const timeLeft = parseInt((timeEnd.getTime() - now.getTime()) / 1000)
+function getTimeString (timestamp) {
+  const timeLeft = parseInt(timestamp / 1000)
   const d = addZero(parseInt(timeLeft / (24 * 60 * 60)))
   const h = addZero(parseInt(timeLeft / (60 * 60) % 24))
   const m = addZero(parseInt(timeLeft / 60 % 60))
@@ -29,7 +27,7 @@ function addZero (i) {
 }
 
 export default {
-  getCountdownString,
+  getTimeString,
   addZero,
   formatTime
 }

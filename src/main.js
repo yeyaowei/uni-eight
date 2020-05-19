@@ -23,6 +23,6 @@ wx.cloud.init({
   traceUser: true
 })
 Vue.prototype.$db = wx.cloud.database()
-store.commit('loadUserInfo')
+store.dispatch('initialize')
 const app = new Vue(App)
 app.$mount()

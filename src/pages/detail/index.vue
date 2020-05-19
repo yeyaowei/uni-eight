@@ -45,9 +45,6 @@ export default {
     const option = this.$root.$mp.query
     this.courseId = option.courseId
     this.homeworkId = option.homeworkId
-    /* if (option.currentItem) {
-      this.currentItem = option.currentItem
-    } */
     this.$db.collection('homework').doc(this.courseId)
       .get().then(res => {
         wx.hideLoading()
@@ -62,7 +59,7 @@ export default {
   },
   onShareAppMessage (result) {
     return {
-      title: '作业详情',
+      title: `作业详情`,
       path: '/pages/detail/main?courseId=' + this.courseId + '&homeworkId=' + this.homeworkId
     }
   }
