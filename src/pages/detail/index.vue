@@ -1,6 +1,6 @@
 <template>
   <div class="page-detail">
-    <swiper class="swiper" indicator-dots="true">
+    <swiper :current="currentItem" class="swiper" indicator-dots="true" @change="currentItemChanged">
       <swiper-item v-for="(homework, index) in homeworkArray" :key="index">
         <scroll-view scroll-y="true">
           <HomeworkDetail :homework="homework"/>
@@ -15,38 +15,56 @@ import HomeworkDetail from '@/components/HomeworkDetail'
 export default {
   data () {
     return {
-      course: {},
-      homeworkArray: []
+      homeworkArray: [],
+      currentItem: 0,
+      courseId: '',
+      homeworkId: '',
+      courseName: ''
     }
   },
   components: {
     HomeworkDetail
+  },
+  methods: {
+    currentItemChanged (e) {
+      this.currentItem = e.mp.detail.current
+    },
+    findHomeworkIndexById (homeworkId) {
+      return this.homeworkArray.findIndex(element => element.id === homeworkId)
+    },
+    changePageTitle () {
+      wx.setNavigationBarTitle({
+        title: `${this.courseName}`
+      })
+    }
   },
   mounted () {
     wx.showLoading({
       title: '加载中'
     })
     const option = this.$root.$mp.query
-    this.$db.collection('homework').doc(option.id)
+    this.courseId = option.courseId
+    this.homeworkId = option.homeworkId
+    /* if (option.currentItem) {
+      this.currentItem = option.currentItem
+    } */
+    this.$db.collection('homework').doc(this.courseId)
       .get().then(res => {
         wx.hideLoading()
         this.homeworkArray = res.data.homework
-        wx.setNavigationBarTitle({
-          title: res.data.name
-        })
+        this.courseName = res.data.name
+        if (this.homeworkId === '0') {
+          this.homeworkId = this.homeworkArray[0].id
+        }
+        this.currentItem = this.findHomeworkIndexById(this.homeworkId)
+        this.changePageTitle()
       })
-    /*
-    this.$wxhttp
-      .get({
-        url: option.id
-      })
-      .then(data => {
-        this.homeworkArray = data.homework
-        wx.setNavigationBarTitle({
-          title: data.name
-        })
-      })
-      */
+  },
+  onShareAppMessage (result) {
+    return {
+      title: '作业详情',
+      path: '/pages/detail/main?courseId=' + this.courseId + '&homeworkId=' + this.homeworkId
+    }
   }
 }
 </script>

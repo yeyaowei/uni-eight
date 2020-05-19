@@ -1,6 +1,9 @@
 <template>
   <div class="container">
-    <div class="page-body detail">
+    <div class="page-header">
+      <p class="text-title">{{ homework.name }}</p>
+    </div>
+    <div class="page-body">
       <div class="block">
         <p class="text-title">提交平台</p>
         <p class="text-desc">{{ homework.platform }}</p>
@@ -72,9 +75,6 @@ export default {
 }
 .content {
   white-space: pre-wrap;
-}
-.detail {
-  margin-top: 40px;
 }
 .bold {
   font-weight: 600;
