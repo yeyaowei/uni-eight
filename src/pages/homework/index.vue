@@ -10,13 +10,13 @@
     </div>
     <div class="page-body">
       <div class="course-list">
-        <div class="course-item" v-for="(course, i1) in courseList" :key="course.name">
-          <div class="course-item-title" @click="navigateToDetail(course._id)">
+        <div class="card" v-for="(course, i1) in courseList" :key="i1">
+          <div class="card-title" @click="navigateToDetail(course._id)">
             <span>{{ course.name }}</span>
             <Count :homework-list="course.homework" />
           </div>
-          <div class="course-item-body">
-            <div class="homework-item" hover-class="hover" v-for="(homework, i2) in course.homework" :key="homework.name" @click="navigateToDetail(course._id, homework.id)">
+          <div class="card-body">
+            <div class="card-list-item" hover-class="hover" v-for="(homework, i2) in course.homework" :key="i2" @click="navigateToDetail(course._id, homework.id)">
               <span>{{ homework.name }}</span>
               <ETA :homework="homework"/>
             </div>
@@ -69,31 +69,9 @@ export default {
 
 <style lang="scss">
 .course-list {
-  .course-item {
+  .card {
     margin-bottom: 20px
   }
 }
-.course-item {
-  border-radius: 3px;
-  box-shadow: 0 3px 8px 0 rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.08);
-  .course-item-title {
-    font-size: 20px;
-    padding: 18px 20px;
-    border-bottom: 1px solid #eeeeee;
-    box-sizing: border-box;
-  }
-  .course-item-body {
-    font-size: 16px;
-    .homework-item {
-      padding: 12px 20px;
-      &.hover {
-        background-color: #f9fafc;
-      }
-      &:last-child {
-        border-bottom-left-radius: 3px;
-        border-bottom-right-radius: 3px;
-      }
-    }
-  }
-}
+
 </style>

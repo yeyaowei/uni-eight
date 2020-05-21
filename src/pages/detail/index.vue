@@ -67,9 +67,6 @@ export default {
 </script>
 
 <style lang="scss">
-.block {
-  margin-bottom: 20px;
-}
 page, .page-detail {
   height: 100%;
 }

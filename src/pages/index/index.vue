@@ -8,9 +8,12 @@
     </div>
     <div class="page-body">
       <ul class="button-list">
-        <li>
-          <div class="button-item transition" hover-class="hover" :class="{ 'disabled': !isLogged}" @click="goToPage('homework', true)">
-            <span>作业查询</span>
+        <li v-for="service in serviceButtons"
+            :key="service.name">
+          <div class="button-item" hover-class="hover"
+              :class="{ 'disabled': !isLogged}"
+              @click="goToPage(service.page, true)">
+            <span>{{ service.name }}</span>
           </div>
         </li>
       </ul>
@@ -24,6 +27,16 @@
 <script>
 
 export default {
+  data () {
+    return {
+      serviceButtons: [
+        {
+          name: '作业详情',
+          page: 'homework'
+        }
+      ]
+    }
+  },
   computed: {
     isLogged () {
       return this.$store.getters.isLogged

@@ -8,7 +8,7 @@
       <p class="text-desc">还没想好下面写些什么...</p>
     </div>
     <div class="page-body">
-      <div class="button-item" v-show="!isLogged" @click="goRegister">
+      <div class="button-item" hover-class="hover" v-show="!isLogged" @click="goRegister">
         <span>登记信息</span>
       </div>
     </div>

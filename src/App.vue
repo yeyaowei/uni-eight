@@ -15,21 +15,22 @@ export default {
 .page-body {
   padding: 0 30px;
 }
-
+.block {
+  margin-bottom: 20px;
+}
 .text-title {
   font-size: 20px;
   font-weight: 400;
   letter-spacing: 1px;
+  margin-bottom: 8px;
 }
 .text-desc {
-  margin-top: 8px;
   color: #888888;
   font-size: 14px;
-}
-
-.title {
-  margin: 20px 0 10px 0;
-  font-size: 24px;
+  margin-bottom: 8px;
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 
 .button-item {
@@ -40,9 +41,10 @@ export default {
   box-shadow: 0 3px 8px 0 rgba(0,0,0,0.2);
   padding: 16px;
   text-align: center;
-  &.transition {
-    transition: 0.2s;
-  }
+  transition: background-color .2s,
+              border .2s,
+              color .2s,
+              box-shadow .2s;
   &.disabled {
     background-color: #f3f3f3;
     border: 1px solid #eeeeee;
@@ -58,5 +60,29 @@ export default {
 }
 .right {
   float: right;
+}
+
+.card {
+  border-radius: 3px;
+  box-shadow: 0 3px 8px 0 rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.08);
+  .card-title {
+    font-size: 20px;
+    padding: 18px 20px;
+    border-bottom: 1px solid #eeeeee;
+    box-sizing: border-box;
+  }
+  .card-body {
+    font-size: 16px;
+  }
+  .card-list-item {
+    padding: 12px 20px;
+    &.hover {
+      background-color: #f9fafc;
+    }
+    &:last-child {
+      border-bottom-left-radius: 3px;
+      border-bottom-right-radius: 3px;
+    }
+  }
 }
 </style>

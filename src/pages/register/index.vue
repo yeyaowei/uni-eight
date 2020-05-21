@@ -12,7 +12,7 @@
         <input placeholder="请输入完整学号" v-model="id" type="text" class="text-input">
       </div>
       <div class="input-box">
-        <div class="button-item transition" :class="{ 'disabled': !isButtonEnabled }" @click="signUp">登记</div>
+        <div class="button-item" hover-class="hover" :class="{ 'disabled': !isButtonEnabled }" @click="signUp">登记</div>
       </div>
     </div>
   </div>

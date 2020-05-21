@@ -4,7 +4,8 @@
     "pages/homework/main",
     "pages/me/main",
     "pages/detail/main",
-    "pages/register/main"
+    "pages/register/main",
+    "pages/download/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
