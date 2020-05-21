@@ -1,6 +1,27 @@
 <script>
-export default {
+import Vue from 'vue'
 
+export default {
+  onLaunch () {
+    wx.cloud.init({
+      env: 'class-eight-01fjv',
+      traceUser: true
+    })
+    Vue.prototype.$db = wx.cloud.database()
+    const updateManager = wx.getUpdateManager()
+
+    updateManager.onUpdateReady(() => {
+      wx.showModal({
+        title: '更新提示',
+        content: '小程序有新版本啦！快点点击确认更新吧！！！',
+        success (res) {
+          if (res.confirm) {
+            updateManager.applyUpdate()
+          }
+        }
+      })
+    })
+  }
 }
 </script>
 

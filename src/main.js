@@ -6,7 +6,7 @@ Vue.prototype.$store = store
 Vue.config.productionTip = false
 App.mpType = 'app'
 Vue.mixin({
-  onUnload: function () {
+  onUnload () {
     if (this.$options.data) {
       if (this.intervalIds) {
         for (const id of this.intervalIds) {
@@ -18,11 +18,6 @@ Vue.mixin({
   }
 })
 
-wx.cloud.init({
-  env: 'class-eight-01fjv',
-  traceUser: true
-})
-Vue.prototype.$db = wx.cloud.database()
 store.dispatch('initialize')
 const app = new Vue(App)
 app.$mount()
