@@ -5,12 +5,13 @@
     "pages/me/main",
     "pages/detail/main",
     "pages/register/main",
-    "pages/download/main"
+    "pages/download/main",
+    "pages/changelog/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
+    "navigationBarTitleText": "谜之八班",
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
