@@ -49,6 +49,16 @@ export default {
         url: '/pages/' + page + '/main'
       })
     }
+  },
+  mounted () {
+    const newVersion = '1.1.0'
+    const oldVersion = wx.getStorageSync('version')
+    if (oldVersion !== newVersion) {
+      wx.navigateTo({
+        url: `/pages/changelog/main?version=${newVersion}`
+      })
+      wx.setStorageSync('version', newVersion)
+    }
   }
 }
 </script>
