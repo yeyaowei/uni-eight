@@ -3,7 +3,7 @@
     <img class="tip-img block" src="/static/images/browserTip.png" mode="aspectFit">
     <div class="block">
       <p class="text-title bold">点击按钮复制下载链接</p>
-      <text selectable="true" class="text-desc">{{ downloadLink }}</text>
+      <text selectable="true" class="text-desc link">{{ downloadLink }}</text>
     </div>
     <div class="block">
       <p class="text-title bold">打开浏览器访问即可下载文件</p>
@@ -26,7 +26,7 @@ export default {
   },
   computed: {
     downloadLink () {
-      return `https://api.wolfg.icu/${this.homeworkId}/${this.fileName}`
+      return `https://api.wolfg.icu/${this.homeworkId}/${encodeURI(this.fileName)}`
     }
   },
   methods: {
@@ -59,6 +59,9 @@ export default {
 }
 .tip-img {
   width: 100%;
-  height: 350px;
+  height: 320px;
+}
+.link {
+  word-wrap: break-word;
 }
 </style>
