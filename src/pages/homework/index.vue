@@ -29,7 +29,7 @@
           </div>
         </div>
       </div>
-      <div v-show="sortedByTime" class="course-list">
+      <div v-show="sortedByTime && courseListTwo.length != 0" class="course-list">
         <div class="card">
           <div class="card-body">
             <div @click="navigateToDetail(homework.courseId, homework.id)" class="card-list-item" style="display: flex; align-items: center;" hover-class="hover" v-for="homework in courseListTwo" :key="homework">
