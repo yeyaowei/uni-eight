@@ -6,7 +6,8 @@ const store = new Vuex.Store({
   state: {
     userInfo: {},
     homework: {
-      done: []
+      done: [],
+      sortedByTime: false
     }
   },
   getters: {
@@ -37,17 +38,48 @@ const store = new Vuex.Store({
           done.splice(index, 1)
         }
       }
-      wx.setStorageSync('homework.done', done)
+      wx.setStorageSync('homework', state.homework)
     },
-    loadHomeworkDoneState (state) {
-      const done = wx.getStorageSync('homework.done')
-      state.homework.done = done || []
+    setHomeworkSubscribeState (state, payload) {
+      const { id, isSubscribed } = payload
+      const subscribed = state.homework.subscribed
+      const index = subscribed.indexOf(id)
+      if (isSubscribed === true) {
+        if (index === -1) {
+          subscribed.push(id)
+        }
+      } else {
+        if (index !== -1) {
+          subscribed.splice(index, 1)
+        }
+      }
+      wx.setStorageSync('homework', state.homework)
+    },
+    loadHomework (state) {
+      const homework = wx.getStorageSync('homework')
+      if (homework) {
+        state.homework = homework
+      }
+    },
+    setHomeworkValue (state, payload) {
+      state.homework[payload.name] = payload.value
+      wx.setStorageSync('homework', state.homework)
     }
   },
   actions: {
-    initialize ({ commit }) {
+    initialize ({ commit, state }) {
       commit('loadUserInfo')
-      commit('loadHomeworkDoneState')
+      commit('loadHomework')
+
+      // 1.1.0 作业提交状态
+      const homeworkDone = wx.getStorageSync('homework.done')
+      if (homeworkDone) {
+        commit('setHomeworkValue', {
+          name: 'done',
+          value: homeworkDone
+        })
+        wx.removeStorageSync('homework.done')
+      }
     }
   }
 })
