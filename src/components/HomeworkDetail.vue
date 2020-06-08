@@ -20,7 +20,7 @@
       </div>
       <div class="block">
         <p class="text-title">作业内容</p>
-        <p class="text-desc content">{{ contentReplace }}</p>
+        <text selectable="true" class="text-desc content">{{ contentReplace }}</text>
       </div>
       <div v-if="isFileExisted">
         <div class="block">
@@ -90,7 +90,7 @@ export default {
     getCountdownString (timestamp) {
       const time = timestamp - Date.now()
       if (time <= 0) return '已截止'
-      return TimeUtil.getTimeString(time)
+      return `还有 ${TimeUtil.getTimeString(time)}`
     },
     formatSize (raw) {
       const unit = ['Bytes', 'KB', 'MB', 'GB']
@@ -118,9 +118,9 @@ export default {
     const endTime = this.homework.endTime
     const startTime = this.homework.startTime
     if (endTime.timestamp) {
-      this.endCountdown = '还有 ' + this.getCountdownString(endTime.timestamp)
+      this.endCountdown = this.getCountdownString(endTime.timestamp)
       let id = setInterval(() => {
-        this.endCountdown = '还有 ' + this.getCountdownString(endTime.timestamp)
+        this.endCountdown = this.getCountdownString(endTime.timestamp)
       }, 1000)
       this.intervalIds.push(id)
     }
