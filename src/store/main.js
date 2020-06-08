@@ -7,7 +7,7 @@ const store = new Vuex.Store({
     userInfo: {},
     homework: {
       done: [],
-      sortedByTime: false
+      sortedByTime: true
     }
   },
   getters: {
