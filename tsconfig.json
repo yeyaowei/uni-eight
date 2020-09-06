@@ -1,26 +1,9 @@
 {
   "compilerOptions": {
-    "baseUrl": "./",
-    "outDir": "./dist/",
     "types": [
-      "@types/weixin-app",
-      "@types/node"
-    ],
-    "paths": {
-      "vue": [
-        "node_modules/mpvue"
-      ],
-      "@/*": [
-        "src/*"
-      ]
-    },
-    "allowJs": true
-  },
-  "include": [
-    "./src/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist"
-  ]
+      "@dcloudio/types",
+      "miniprogram-api-typings",
+      "mini-types"
+    ]
+  }
 }

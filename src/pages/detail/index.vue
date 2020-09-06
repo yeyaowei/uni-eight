@@ -27,7 +27,7 @@ export default {
   },
   methods: {
     currentItemChanged (e) {
-      this.currentItem = e.mp.detail.current
+      this.currentItem = e.detail.current
     },
     findHomeworkIndexById (homeworkId) {
       return this.homeworkArray.findIndex(element => element.id === homeworkId)
@@ -60,7 +60,7 @@ export default {
   onShareAppMessage (result) {
     return {
       title: `作业详情`,
-      path: '/pages/detail/main?courseId=' + this.courseId + '&homeworkId=' + this.homeworkId
+      path: '/pages/detail/index?courseId=' + this.courseId + '&homeworkId=' + this.homeworkId
     }
   }
 }

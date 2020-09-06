@@ -2,8 +2,9 @@ import Vue from 'vue'
 import App from './App'
 import store from './store/main'
 
-Vue.prototype.$store = store
 Vue.config.productionTip = false
+Vue.prototype.$store = store
+
 App.mpType = 'app'
 Vue.mixin({
   onUnload () {
@@ -17,7 +18,9 @@ Vue.mixin({
     }
   }
 })
-
 store.dispatch('initialize')
-const app = new Vue(App)
+const app = new Vue({
+  store,
+  ...App
+})
 app.$mount()

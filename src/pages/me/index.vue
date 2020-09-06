@@ -49,7 +49,7 @@ export default {
   methods: {
     goRegister () {
       wx.navigateTo({
-        url: '/pages/register/main'
+        url: '/pages/register/index'
       })
     }
   }

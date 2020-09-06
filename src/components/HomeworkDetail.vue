@@ -110,7 +110,7 @@ export default {
     },
     toDownloadPage (name) {
       wx.navigateTo({
-        url: `/pages/download/main?homeworkId=${this.homework.id}&fileName=${name}`
+        url: `/pages/download/index?homeworkId=${this.homework.id}&fileName=${name}`
       })
     }
   },

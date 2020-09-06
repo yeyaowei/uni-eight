@@ -1,0 +1,70 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index"
+		},
+		{
+			"path": "pages/homework/index",
+			"navigationBarTitleText": "作业查询",
+  			"enablePullDownRefresh": true,
+  			"backgroundTextStyle": "dark"
+		},
+		{
+			"path": "pages/me/index",
+			"navigationBarTitleText": "个人信息"
+		},
+		{
+			"path": "pages/detail/index",
+			"navigationBarTitleText": "作业详情"
+		},
+		{
+			"path": "pages/register/index",
+			"navigationBarTitleText": "信息登记"
+		},
+		{
+			"path": "pages/download/index",
+			"navigationBarTitleText": "下载链接"
+		},
+		{
+			"path": "pages/changelog/index",
+			"navigationBarTitleText": "更新记录"
+		}
+	],
+	"globalStyle": {
+		"navigationBarTitleText": "谜之八班",
+		"navigationBarBackgroundColor": "#FFFFFF",
+		"navigationBarTextStyle": "black",
+		"backgroundTextStyle": "light"
+	},
+	"tabBar": {
+		"color": "#999",
+		"backgroundColor": "#fafafa",
+		"selectedColor": "#333",
+		"borderStyle": "white",
+	
+		"list": [{
+		  "text": "首页",
+		  "pagePath": "pages/index/index",
+		  "iconPath": "static/tabs/home.png",
+		  "selectedIconPath": "static/tabs/home-active.png"
+		}, {
+		  "text": "我",
+		  "pagePath": "pages/me/index",
+		  "iconPath": "static/tabs/me.png",
+		  "selectedIconPath": "static/tabs/me-active.png"
+		}],
+	
+		"items": [{
+		  "name": "首页",
+		  "pagePath": "pages/index/index",
+		  "icon": "static/tabs/home.png",
+		  "activeIcon": "static/tabs/home-active.png"
+		}, {
+		  "name": "我",
+		  "pagePath": "pages/me/index",
+		  "icon": "static/tabs/me.png",
+		  "activeIcon": "static/tabs/me-active.png"
+		}],
+		"position": "bottom"
+	  }
+}

@@ -46,7 +46,7 @@ export default {
     goToPage (page, needLogged) {
       if (needLogged && this.isLogged === false) return
       wx.navigateTo({
-        url: '/pages/' + page + '/main'
+        url: '/pages/' + page + '/index'
       })
     }
   },
@@ -55,7 +55,7 @@ export default {
     const oldVersion = wx.getStorageSync('version')
     if (oldVersion !== newVersion) {
       wx.navigateTo({
-        url: `/pages/changelog/main?version=${newVersion}`
+        url: `/pages/changelog/index?version=${newVersion}`
       })
       wx.setStorageSync('version', newVersion)
     }

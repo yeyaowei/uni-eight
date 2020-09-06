@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="page-body">
-      <div v-show="!sortedByTime" class="course-list">
+      <div v-if="!sortedByTime" class="course-list">
         <div class="card" v-for="(course, i1) in courseList" :key="i1">
           <div class="card-title" @click="navigateToDetail(course._id)">
             <span>{{ course.name }}</span>
@@ -29,7 +29,7 @@
           </div>
         </div>
       </div>
-      <div v-show="sortedByTime && courseListTwo.length != 0" class="course-list">
+      <div v-if="sortedByTime && courseListTwo.length != 0" class="course-list">
         <div class="card">
           <div class="card-body">
             <div @click="navigateToDetail(homework.courseId, homework.id)" class="card-list-item" style="display: flex; align-items: center;" hover-class="hover" v-for="homework in courseListTwo" :key="homework">
@@ -108,7 +108,7 @@ export default {
     },
     navigateToDetail (courseId, homeworkId = '0') {
       wx.navigateTo({
-        url: `/pages/detail/main?courseId=${courseId}&homeworkId=${homeworkId}`
+        url: `/pages/detail/index?courseId=${courseId}&homeworkId=${homeworkId}`
       })
     }
   }
