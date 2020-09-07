@@ -5,6 +5,9 @@
         17级英语8班
       </div>
       <p class="text-desc">{{ isLogged ? '不知道说什么...' : '您尚未登记信息，请点击右下角「我」进行登记。'}}</p>
+      <div v-if="environment != 'release'">
+        <p class="text-desc">您正在使用「体验版」小程序！</p>
+      </div>
     </div>
     <div class="page-body">
       <ul class="button-list">
@@ -25,7 +28,7 @@
 </template>
 
 <script>
-
+import ChannelUtil from '@/utils/channel'
 export default {
   data () {
     return {
@@ -34,7 +37,8 @@ export default {
           name: '作业详情',
           page: 'homework'
         }
-      ]
+      ],
+      environment: ChannelUtil.getChannel()
     }
   },
   computed: {
