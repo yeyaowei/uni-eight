@@ -13,7 +13,7 @@ export default {
     updateManager.onUpdateReady(() => {
       wx.showModal({
         title: '更新提示',
-        content: '小程序有新版本啦！快点点击确认更新吧！！！',
+        content: '小程序有新版本啦！快点击确认更新吧！！！',
         success (res) {
           if (res.confirm) {
             updateManager.applyUpdate()
