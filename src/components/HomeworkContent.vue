@@ -1,7 +1,7 @@
 <template>
   <div>
     <text v-if="isImageLoading && isImageExisted" class="image-loading">图片加载中</text>
-    <img v-show="isImageExisted && !isImageLoading" class="homework-image" :src="content.img" @click="previewImage" @load="imageLoaded" @error="imageError"/>
+    <img v-show="isImageExisted && !isImageLoading" class="homework-image" :src="content.img" @click="previewImage" @load="imageLoaded"/>
     <text v-if="isTextExisted" selectable="true" class="text-desc">{{ content.text }}</text>
   </div>
 </template>
@@ -34,11 +34,7 @@ export default {
       
     },
     imageLoaded () {
-      console.log('image loaded')
       this.isImageLoading = false
-    },
-    imageError (res) {
-      console.log(res)
     }
   }
 }
