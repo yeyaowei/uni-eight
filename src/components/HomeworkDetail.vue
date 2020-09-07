@@ -20,7 +20,9 @@
       </div>
       <div class="block">
         <p class="text-title">作业内容</p>
-        <text selectable="true" class="text-desc content">{{ contentReplace }}</text>
+        <template v-for="content in homework.content">
+          <homework-content :content="content" :key="content"/>
+        </template>
       </div>
       <div v-if="isFileExisted">
         <div class="block">
@@ -49,8 +51,11 @@
 
 <script>
 import TimeUtil from '@/utils/time'
-
+import HomeworkContent from '@/components/HomeworkContent'
 export default {
+  components: {
+    HomeworkContent
+  },
   props: ['homework'],
   data () {
     return {
@@ -61,9 +66,6 @@ export default {
     }
   },
   computed: {
-    contentReplace () {
-      return this.homework.content.replace(/\\n/g, '\n')
-    },
     isDone () {
       return this.$store.state.homework.done.indexOf(this.homework.id) !== -1
     },

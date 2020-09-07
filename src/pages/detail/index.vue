@@ -12,6 +12,8 @@
 
 <script>
 import HomeworkDetail from '@/components/HomeworkDetail'
+import ChannelUtil from '@/utils/channel'
+
 export default {
   data () {
     return {
@@ -45,11 +47,17 @@ export default {
     const option = this.$root.$mp.query
     this.courseId = option.courseId
     this.homeworkId = option.homeworkId
-    this.$db.collection('homework').doc(this.courseId)
-      .get().then(res => {
+    wx.cloud.callFunction({
+      name: 'getHomeworkById',
+      data: {
+        id: this.courseId,
+        channel: ChannelUtil.getChannel()
+      }
+    }).then(res => {
+        const result = res.result.data
         wx.hideLoading()
-        this.homeworkArray = res.data.homework
-        this.courseName = res.data.name
+        this.homeworkArray = result.homework
+        this.courseName = result.name
         if (this.homeworkId === '0') {
           this.homeworkId = this.homeworkArray[0].id
         }

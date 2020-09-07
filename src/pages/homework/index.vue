@@ -52,6 +52,8 @@
 <script>
 import ETA from './ETA.vue'
 import Count from './Count.vue'
+import ChannelUtil from '@/utils/channel'
+
 export default {
   components: {
     ETA,
@@ -84,11 +86,15 @@ export default {
       wx.showLoading({
         title: '加载中'
       })
-      this.$db.collection('homework')
-        .get().then(res => {
+      wx.cloud.callFunction({
+        name: 'getHomeworkList',
+        data: {
+          channel: ChannelUtil.getChannel()
+        }
+      }).then(res => {
           wx.hideLoading()
           wx.stopPullDownRefresh()
-          this.courseList = res.data
+          this.courseList = res.result.data
           this.courseListTwo = this.courseList.map(course => course.homework.map(homework => ({...homework, course: course.name, courseId: course._id}))).flat()
           const now = Date.now()
           this.courseListTwo.sort((a, b) => {
