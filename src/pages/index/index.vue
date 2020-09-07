@@ -55,7 +55,7 @@ export default {
     }
   },
   mounted () {
-    const newVersion = '1.1.1'
+    const newVersion = '1.2.0'
     const oldVersion = wx.getStorageSync('version')
     if (oldVersion !== newVersion) {
       wx.navigateTo({
