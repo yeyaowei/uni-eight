@@ -67,7 +67,7 @@ export default {
   },
   onShareAppMessage (result) {
     return {
-      title: `作业详情`,
+      title: `作业 - ${this.courseName}`,
       path: '/pages/detail/index?courseId=' + this.courseId + '&homeworkId=' + this.homeworkId
     }
   }
