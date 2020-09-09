@@ -80,6 +80,13 @@ const store = new Vuex.Store({
         })
         wx.removeStorageSync('homework.done')
       }
+    },
+    removeInvalidHomework({ commit, state }, homeworkList) {
+      const result = state.homework.done.filter(e => homeworkList.includes(e))
+      commit('setHomeworkValue', {
+        name: 'done',
+        value: result
+      })
     }
   }
 })

@@ -96,6 +96,11 @@ export default {
           wx.stopPullDownRefresh()
           this.courseList = res.result.data
           this.courseListTwo = this.courseList.map(course => course.homework.map(homework => ({...homework, course: course.name, courseId: course._id}))).flat()
+          
+          // 清除无效作业完成状态
+          const homeworkIdList = this.courseListTwo.map(homework => homework.id)
+          this.$store.dispatch('removeInvalidHomework', homeworkIdList)
+
           const now = Date.now()
           this.courseListTwo.sort((a, b) => {
             if (!a.endTime.timestamp) {
