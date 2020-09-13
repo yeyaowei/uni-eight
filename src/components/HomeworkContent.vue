@@ -1,7 +1,11 @@
 <template>
   <div>
-    <text v-if="isImageLoading && isImageExisted" class="image-loading">图片加载中</text>
-    <image v-show="isImageExisted && !isImageLoading" class="homework-image" mode="widthFix" :src="content.img" @click="previewImage" @load="imageLoaded"/>
+    <text v-if="isImageLoading && isImageExisted" class="image-loading">{{ imageLoadingText }}</text>
+    <image v-show="isImageExisted && !isImageLoading" class="homework-image" :class="{ 'no-margin-bottom': !isTextExisted }" mode="widthFix" 
+      :src="content.img"
+      @click="previewImage"
+      @load="imageLoaded"
+      @error="imageError"/>
     <text v-if="isTextExisted" user-select="true" class="text-desc">{{ content.text }}</text>
   </div>
 </template>
@@ -13,7 +17,8 @@ export default {
     return {
       isImageExisted: this.content.hasOwnProperty('img'),
       isTextExisted: this.content.hasOwnProperty('text'),
-      isImageLoading: true
+      isImageLoading: true,
+      imageLoadingText: '图片加载中'
     }
   },
   methods: {
@@ -35,18 +40,24 @@ export default {
     },
     imageLoaded () {
       this.isImageLoading = false
+    },
+    imageError () {
+      this.imageLoadingText = "图片加载失败！"
     }
   }
 }
 </script>
 
-<style>
+<style lang="scss">
 .homework-image {
   border-radius: 2px;
   box-shadow: 0 4px 4px 0 rgba(0,0,0,0.2);
   margin: 20px auto 20px;
   display: block;
   width: 100%;
+  &.no-margin-bottom {
+    margin-bottom: 0;
+  }
 }
 .image-loading {
   letter-spacing: 2px;

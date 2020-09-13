@@ -106,4 +106,30 @@ export default {
     }
   }
 }
+
+.new-type {
+  .page-body {
+    margin-top: 20px;
+  }
+  .block {
+    margin-bottom: 30px;
+  }
+  .text-title {
+    font-size: 16px;
+    line-height: 24px;
+    margin-bottom: 0;
+    color: #888;
+  }
+  .text-info {
+    font-size: 32px;
+    line-height: 32px;
+    color: black;
+  }
+  .text-extra {
+    font-size: 16px;
+    line-height: 24px;
+    padding-top: 4px;
+    color: #888;
+  }
+}
 </style>

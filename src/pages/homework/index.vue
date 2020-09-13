@@ -76,46 +76,78 @@ export default {
     }
   },
   mounted () {
-    this.fetchCourses()
+    wx.showLoading({
+      title: '加载中'
+    })
+    this.fetchCourses().then(courses => {
+      wx.hideLoading()
+      this.handleCourses(courses)
+    })
   },
   onPullDownRefresh () {
-    this.fetchCourses()
+    wx.showLoading({
+      title: '加载中'
+    })
+    this.fetchCourses().then(courses => {
+      wx.hideLoading()
+      wx.stopPullDownRefresh()
+      this.handleCourses(courses)
+    })
   },
   methods: {
     fetchCourses () {
-      wx.showLoading({
-        title: '加载中'
-      })
-      wx.cloud.callFunction({
+      return wx.cloud.callFunction({
         name: 'getHomeworkList',
         data: {
           channel: ChannelUtil.getChannel()
         }
       }).then(res => {
-          wx.hideLoading()
-          wx.stopPullDownRefresh()
-          this.courseList = res.result.data
-          this.courseListTwo = this.courseList.map(course => course.homework.map(homework => ({...homework, course: course.name, courseId: course._id}))).flat()
-          
-          // 清除无效作业完成状态
-          const homeworkIdList = this.courseListTwo.map(homework => homework.id)
-          this.$store.dispatch('removeInvalidHomework', homeworkIdList)
-
-          const now = Date.now()
-          this.courseListTwo.sort((a, b) => {
-            if (!a.endTime.timestamp) {
-              return 1
-            } else if (!b.endTime.timestamp) {
-              return -1
-            } else if (a.endTime.timestamp - now < 0) {
-              return 1
-            } else if (b.endTime.timestamp - now < 0) {
-              return -1
-            } else {
-              return a.endTime.timestamp - b.endTime.timestamp
-            }
-          })
+        this.$store.commit('saveCache', {
+          name: 'homework',
+          data: res.result.data
         })
+        return res.result.data
+      }).catch(res => {
+        const homeworkCache = this.$store.state.cache.homework
+        if (homeworkCache != null) {
+          wx.showToast({
+            title: '加载作业列表失败，将使用本地缓存。',
+            icon: 'none'
+          })
+          return homeworkCache
+        } else {
+          wx.showModal({
+            title: '作业列表',
+            content: '加载作业列表失败！请检查您的网络！',
+            showCancel: false
+          })
+          return null
+        }
+      })
+    },
+    handleCourses (courses) {
+      if (courses == null) return
+      this.courseList = courses
+      this.courseListTwo = this.courseList.map(course => course.homework.map(homework => ({...homework, course: course.name, courseId: course._id}))).flat()
+
+      // 清除无效作业完成状态
+      const homeworkIdList = this.courseListTwo.map(homework => homework.id)
+      this.$store.dispatch('removeInvalidHomework', homeworkIdList)
+
+      const now = Date.now()
+      this.courseListTwo.sort((a, b) => {
+        if (!a.endTime.timestamp) {
+          return 1
+        } else if (!b.endTime.timestamp) {
+          return -1
+        } else if (a.endTime.timestamp - now < 0) {
+          return 1
+        } else if (b.endTime.timestamp - now < 0) {
+          return -1
+        } else {
+          return a.endTime.timestamp - b.endTime.timestamp
+        }
+      })
     },
     navigateToDetail (courseId, homeworkId = '0') {
       wx.navigateTo({

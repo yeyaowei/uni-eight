@@ -4,10 +4,15 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
+    version: '1.3.2',
     userInfo: {},
     homework: {
       done: [],
       sortedByTime: true
+    },
+    cache: {
+      homework: null,
+      timetable: null
     }
   },
   getters: {
@@ -64,12 +69,24 @@ const store = new Vuex.Store({
     setHomeworkValue (state, payload) {
       state.homework[payload.name] = payload.value
       wx.setStorageSync('homework', state.homework)
+    },
+    saveCache (state, payload) {
+      const { name, data } = payload
+      state.cache[name] = data
+      wx.setStorageSync('cache', state.cache)
+    },
+    loadCache (state) {
+      const cache = wx.getStorageSync('cache')
+      if (cache) {
+        state.cache = cache
+      }
     }
   },
   actions: {
     initialize ({ commit, state }) {
       commit('loadUserInfo')
       commit('loadHomework')
+      commit('loadCache')
 
       // 1.1.0 作业提交状态
       const homeworkDone = wx.getStorageSync('homework.done')

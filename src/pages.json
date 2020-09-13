@@ -40,6 +40,18 @@
 			"style": {
 				"navigationBarTitleText": "更新记录"
 			}
+		},
+		{
+			"path": "pages/timetable/index",
+			"style": {
+				"navigationBarTitleText": "课程表"
+			}
+		},
+		{
+			"path": "pages/timetable/week",
+			"style": {
+				"navigationBarTitleText": "本周课表"
+			}
 		}
 	],
 	"globalStyle": {

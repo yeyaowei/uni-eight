@@ -34,7 +34,9 @@ export default {
   },
   methods: {
     signUp () {
-      wx.showLoading({title: '加载中'})
+      wx.showLoading({
+        title: '加载中'
+      })
       wx.cloud.callFunction({
         name: 'register',
         data: {
@@ -42,20 +44,37 @@ export default {
           id: this.id
         }
       }).then(res => {
-        wx.hideLoading()
         if (res.result.msg !== 'ok') {
           wx.showModal({
             content: res.result.msg,
             showCancel: false
           })
         } else {
-          this.saveUserInfo(res.result.userInfo)
-          wx.navigateBack()
+          wx.cloud.callFunction({
+            name: 'getUserInfo'
+          }).then(res => {
+            switch (res.result.msg) {
+              case 'ok':
+                this.$store.commit('saveUserInfo', res.result.userInfo)
+                wx.navigateBack()
+                break
+              default:
+                wx.showModal({
+                  content: res.result.msg,
+                  showCancel: false
+                })
+                break
+            }
+          })
         }
+      }).catch(() => {
+        wx.showModal({
+          content: '加载失败，请检查您的网络状况！',
+          showCancel: false
+        })
+      }).then(() => {
+        wx.hideLoading()
       })
-    },
-    saveUserInfo (data) {
-      this.$store.commit('saveUserInfo', data)
     }
   }
 }

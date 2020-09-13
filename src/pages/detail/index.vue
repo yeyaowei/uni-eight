@@ -54,16 +54,39 @@ export default {
         channel: ChannelUtil.getChannel()
       }
     }).then(res => {
-        const result = res.result.data
-        wx.hideLoading()
-        this.homeworkArray = result.homework
-        this.courseName = result.name
-        if (this.homeworkId === '0') {
-          this.homeworkId = this.homeworkArray[0].id
+      return res.result.data
+    }).catch(res => {
+      const homeworkCache = this.$store.state.cache.homework
+      if (homeworkCache != null) {
+        const course = homeworkCache.find(element => element._id == this.courseId)
+        if(course != null) {
+          wx.showToast({
+            title: '加载作业详情失败，将使用本地缓存。',
+            icon: 'none'
+          })
+          return course
         }
-        this.currentItem = this.findHomeworkIndexById(this.homeworkId)
-        this.changePageTitle()
+      }
+      wx.showModal({
+        title: '作业详情',
+        content: '加载作业详情失败！请检查您的网络！',
+        showCancel: false
       })
+      return null
+    }).then(res => {
+      wx.hideLoading()
+      if(res == null) {
+        wx.navigateBack()
+        return
+      }
+      this.homeworkArray = res.homework
+      this.courseName = res.name
+      if (this.homeworkId === '0') {
+        this.homeworkId = this.homeworkArray[0].id
+      }
+      this.currentItem = this.findHomeworkIndexById(this.homeworkId)
+      this.changePageTitle()
+    })
   },
   onShareAppMessage (result) {
     return {

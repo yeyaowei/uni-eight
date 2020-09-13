@@ -15,7 +15,8 @@ exports.main = async (event, context) => {
       return {msg: 'ok', userInfo: {
         openid: wxContext.OPENID,
         name: res.data[0].name,
-        id: res.data[0].id
+        id: res.data[0].id,
+        exclusive: res.data[0].exclusive
       }}
     }
   })
