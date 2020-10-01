@@ -7,10 +7,10 @@
       <p class="text-desc bold">为了这些东西一夜之间我白了（一根）头（发）...</p>
     </div>
     <div class="page-body">
-      <p class="text-title">质量更新</p>
+<!--       <p class="text-title">质量更新</p>
       <p class="text-desc">· 所有需要进行网络请求的地方都加入了超时提醒（不会一直转圈圈了）</p>
       <p class="text-desc">· 若网络不佳且本地存在缓存的情况下，作业查询与课程表都会使用本地缓存的版本</p>
-      <p class="text-desc">十分感谢<span style="color: orange">叶露同学</span>的建议惹，大家快去夸夸他~🎉</p>
+      <p class="text-desc">十分感谢<span style="color: orange">叶露同学</span>的建议惹，大家快去夸夸他~🎉</p> -->
       <p class="text-title">课程表<span style="color: orange"> New!!!</span></p>
       <p class="text-desc">· 查看当前校历第几周</p>
       <p class="text-desc">· 查看本周与下周一的课程安排</p>
