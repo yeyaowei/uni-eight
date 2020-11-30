@@ -4,14 +4,14 @@
       <div class="text-title">
         17级英语8班
       </div>
-      <p class="text-desc">{{ isLogged ? '不知道说什么...' : '您尚未登记信息，请点击右下角「我」进行登记。'}}</p>
+      <p class="text-desc">{{ isLogged ? '毕业快乐！🎓🎊' : '您尚未登记信息，请点击右下角「我」进行登记。'}}</p>
     </div>
     <div class="page-body">
       <ul class="button-list">
         <li v-for="service in serviceButtons"
             :key="service.name">
           <div class="button-item" hover-class="hover"
-              :class="{ 'disabled': !isLogged}"
+              :class="{ 'disabled': !isLogged || service.page == ''}"
               @click="goToPage(service.page, true)">
             <span>{{ service.name }}</span>
           </div>
@@ -31,10 +31,6 @@ export default {
     return {
       serviceButtons: [
         {
-          name: '作业详情',
-          page: 'homework/index'
-        },
-        {
           name: '课程表',
           page: 'timetable/index'
         }
@@ -50,7 +46,7 @@ export default {
   },
   methods: {
     goToPage (page, needLogged) {
-      if (needLogged && this.isLogged === false) return
+      if ((needLogged && this.isLogged === false) || page == '') return
       wx.navigateTo({
         url: '/pages/' + page
       })
@@ -73,7 +69,7 @@ export default {
           default:
             break
         }
-      }).catch(res => {
+      }).catch(() => {
         wx.showModal({
           content: '加载失败，请检查您的网络状况！',
           showCancel: false
@@ -84,21 +80,38 @@ export default {
     }
   },
   mounted () {
-    const newVersion = this.$store.state.version
+    const currentVersion = this.$store.state.version
     const oldVersion = wx.getStorageSync('version')
-    if (oldVersion !== newVersion || this.isLogged == false) {
+    if (oldVersion !== currentVersion || this.isLogged == false) {
       this.refreshUserInfo().then(() => {
         this.isLoaded = true
-        if (oldVersion !== newVersion) {
+        if (oldVersion !== currentVersion) {
           wx.navigateTo({
-            url: `/pages/changelog/index?version=${newVersion}`
+            url: `/pages/changelog/index?version=${currentVersion}`
           })
-          wx.setStorageSync('version', newVersion)
+          wx.setStorageSync('version', currentVersion)
         }
       })
-    } else {
-      this.isLoaded = true
     }
+    wx.showLoading({
+      title: '获取可用功能中...'
+    })
+    wx.cloud.callFunction ({
+      name: 'getServiceButtons',
+      data: {
+        version: currentVersion
+      }
+    }).then(res => {
+      this.serviceButtons = res.result.data
+    }).catch(() => {
+      wx.showModal({
+        content: '加载失败，请检查您的网络状况！',
+        showCancel: false
+      })
+    }).then(() => {
+      wx.hideLoading()
+      this.isLoaded = true
+    })
   }
 }
 </script>

@@ -52,6 +52,12 @@
 			"style": {
 				"navigationBarTitleText": "本周课表"
 			}
+		},
+		{
+			"path": "pages/message/index",
+			"style": {
+				"navigationBarTitleText": "信息"
+			}
 		}
 	],
 	"globalStyle": {
