@@ -8,17 +8,17 @@
       <div class="block">
         <p class="text-title">当前课程</p>
         <p v-if="step < 0" class="text-info">{{ step == -1 ? '早上好~' : '晚安！' }}</p>
-        <p v-else-if="(currentCourse == null || isInRestTime) && nextCourse == null" class="text-info">本日课程已结束</p>
+        <p v-else-if="noCourseAnymore" class="text-info">本日课程已结束</p>
         <p v-else-if="isInRestTime == false" class="text-info">{{ currentCourse != null ? currentCourse.name : '无课' }}</p>
         
         <p v-else class="text-info">课间时间</p>
         <p class="text-extra">{{ timeRangeText }}</p>
       </div>
-      <div v-if="!(currentCourse == null && nextCourse == null)" class="block">
+      <div v-if="!noCourseAnymore" class="block">
         <p class="text-title">距离{{ isInRestTime ? '上' : currentCourse == null ? '上' : '下' }}课时间</p>
         <p class="text-info">还有 {{ etaTimeText }}</p>
       </div>
-      <div v-if="!(currentCourse == null && nextCourse == null)" class="block">
+      <div v-if="!noCourseAnymore" class="block">
         <p class="text-title">下节课程</p>
         <p v-if="nextCourse == null" class="text-info">无课</p>
         <template v-else>
@@ -29,6 +29,13 @@
       <div class="block">
         <div class="button-item" hover-class="hover" @click="goToWeekly(today)">查看本周课程安排</div>
       </div>
+      <div v-if="debug.enabled" class="block">
+        <div class="input-box" style="margin-top: 10px">
+          <input :placeholder="nowTimeText" v-model="debug.customTime" type="text" class="text-input">
+        </div>
+        <div class="button-item" style="margin-top: 10px" hover-class="hover" @click="setCustomTime()">Set time</div>
+        <div class="button-item" style="margin-top: 10px" hover-class="hover" @click="setCustomTime(480000)">Add 8 minutes</div>
+      </div>
     </div>
   </div>
 </template>
@@ -36,6 +43,7 @@
 <script>
 import TimeUtil from '@/utils/time'
 import CourseUtil from './timetable'
+import ChannelUtil from '@/utils/channel'
 
 const timeOfDay = CourseUtil.timeOfDay
 
@@ -46,10 +54,17 @@ export default {
       intervalIds: [],
       now: new Date(),
       isLoaded: false,
-      courseListToday: []
+      courseListToday: [],
+      debug: {
+        customTime: '',
+        enabled: ChannelUtil.getChannel() == 'develop'
+      }
     }
   },
   computed: {
+    nowTimeText () {
+      return TimeUtil.formatTime(this.now, true)
+    },
     today () {
       return TimeUtil.getRealDay(this.now.getDay())
     },
@@ -90,6 +105,9 @@ export default {
       } while (tStep < timeOfDay.length)
       return null
     },
+    noCourseAnymore () {
+      return (this.currentCourse == null || this.isInRestTime) && this.nextCourse == null
+    },
     timeRangeText () {
       if (this.step == -1) {
         return `00:00 ~ ${TimeUtil.secondsToHm(timeOfDay[0][0] / 1000)}`
@@ -125,9 +143,18 @@ export default {
   },
   mounted () {
     this.fetchTable()
+    this.startTimeUpdating()
   },
   methods: {
-    getCourseTimeFromIndex(index, startOrEnd) {
+    setCustomTime (add = 0) {
+      if(add == 0) {
+        this.now = new Date(this.debug.customTime)
+        this.fetchTable()
+      } else {
+        this.now = new Date(this.now.getTime() + add)
+      }
+    },
+    getCourseTimeFromIndex (index, startOrEnd) {
       return timeOfDay[index][startOrEnd]
     },
     fetchTable () {
@@ -165,10 +192,6 @@ export default {
           return
         }
         this.courseListToday = CourseUtil.process(CourseUtil.getValidCourses(res[this.today], this.$store.state.userInfo.exclusive, this.todayWeek))
-        let id = setInterval(() => {
-          this.now = new Date()
-        }, 1000)
-        this.intervalIds.push(id)
 
         wx.hideLoading()
         this.isLoaded = true
@@ -197,6 +220,12 @@ export default {
       wx.navigateTo({
         url: `/pages/timetable/week?day=${day}`
       })
+    },
+    startTimeUpdating () {
+      let id = setInterval(() => {
+        if(this.debug.customTime == '') this.now = new Date()
+      }, 1000)
+      this.intervalIds.push(id)
     }
   }
 }

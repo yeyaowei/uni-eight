@@ -7,7 +7,7 @@ function getTimeString (timestamp, noDay = false) {
   return noDay == false ? `${d} 天 ${h} 时 ${m} 分 ${s} 秒` : `${h} 时 ${m} 分 ${s} 秒`
 }
 
-function formatTime (date) {
+function formatTime (date, addSeconds = false) {
   const month = date.getMonth() + 1
   const day = date.getDate()
 
@@ -18,7 +18,7 @@ function formatTime (date) {
   const minute = date.getMinutes()
 
   const t1 = `${month} 月 ${day} 日`
-  const t2 = `${noon} ${addZero(hour)}:${addZero(minute)}`
+  const t2 = `${noon} ${addZero(hour)}:${addZero(minute)}${addSeconds ? `:${addZero(date.getSeconds())}` : ''}`
   return `${t1} ${t2}`
 }
 

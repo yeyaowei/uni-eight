@@ -19,7 +19,7 @@
       </ul>
     </div>
     <div v-if="environment != 'release'" class="footer">
-      <p class="text-desc">您正在使用「体验版」小程序！</p>
+      <p class="text-desc">您正在使用「{{ environment == 'develop' ? '开发版' : '体验版' }}」小程序！</p>
     </div>
   </div>
 </template>
