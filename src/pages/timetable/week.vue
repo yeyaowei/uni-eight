@@ -3,7 +3,7 @@
     <swiper :current="currentItem" class="swiper" indicator-dots="true" @change="currentItemChanged">
       <swiper-item v-for="day in weekList" :key="day.date">
         <scroll-view scroll-y="true">
-          <Schedule :date-time="day.date" :course-list="day.courses"/>
+          <Schedule :date-time="day.date" :course-list="day.courses" :next-week-course-list="day.nextWeekCourses"/>
         </scroll-view>
       </swiper-item>
     </swiper>
@@ -79,7 +79,8 @@ export default {
         const week = CourseUtil.getSchoolWeekFromDate(date)
         result.push({
           date: date.getTime(),
-          courses: CourseUtil.getValidCourses(courseList, this.$store.state.userInfo.exclusive, week)
+          courses: CourseUtil.getValidCourses(courseList, this.$store.state.userInfo.exclusive, week),
+          nextWeekCourses: CourseUtil.getValidCourses(courseList, this.$store.state.userInfo.exclusive, week + 1)
         })
       }
       this.weekList = result
