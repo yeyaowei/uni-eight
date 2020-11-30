@@ -109,15 +109,4 @@ export default {
 page {
   height: 100%;
 }
-.input-box {
-  margin-top: 20px;
-  .text-title {
-    margin-left: 10px;
-  }
-  .text-input {
-    margin-top: 10px;
-    padding: 10px;
-    border: 1px solid #afafaf;
-  }
-}
 </style>

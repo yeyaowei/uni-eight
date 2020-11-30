@@ -132,4 +132,20 @@ export default {
     color: #888;
   }
 }
+
+.input-box {
+  margin-top: 20px;
+  .text-title {
+    margin-left: 10px;
+  }
+  .text-input {
+    margin-top: 10px;
+    padding: 10px;
+    background: #f3f3f3;
+    border-radius: 3px;
+    &::placeholder {
+      color: #e0e0e0;
+    }
+  }
+}
 </style>
