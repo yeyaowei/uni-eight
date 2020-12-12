@@ -4,7 +4,7 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
-    version: '1.3.2',
+    version: '1.4.0',
     userInfo: {},
     homework: {
       done: [],
